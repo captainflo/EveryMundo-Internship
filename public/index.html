@@ -39,11 +39,11 @@
                 <div class="form">
                     <div class="row">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Round-trip" checked>
                             <label class="form-check-label" for="exampleRadios1">
                                 Round-trip
                             </label>
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="One Way">
                             <label class="form-check-label" for="exampleRadios2">
                                 One Way
                             </label>
@@ -62,7 +62,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-md-3">
                             <label>Depart</label>
-                            <input type="date" class="form-control depart" placeholder="mm/dd/yyyy">
+                            <input type="date" class="way form-control depart" placeholder="mm/dd/yyyy">
                         </div>
                         <div class="col-xs-12 col-md-3">
                             <label>Return</label>
@@ -90,6 +90,12 @@
                             <label>Promo Code</label>
                             <input type="text" class="form-control" placeholder="">
                         </div>
+                        <div class="col-xs-12 col-md-3">
+                        <select class="custom-select">
+                                <option value="Economy">Economy</option>
+                                <option value="Premium">Premium</option>
+                              </select>
+                        </div>
                     </div>
                     <button type="submit" class="flight-button btn btn-primary">Search Flights</button>
                 </div>
@@ -106,6 +112,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="./assets/js/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeAipRGvfEcH30zU8l2XMdvrtycHpV55g&libraries=places&callback=initAutocomplete"
+        async defer></script>
 </body>
 </html>
 

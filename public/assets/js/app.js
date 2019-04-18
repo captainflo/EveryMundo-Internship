@@ -6,6 +6,16 @@
         $('.return').prop('disabled', false);
     });
 
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search predictions to
+        // geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), {types: ['geocode']});
+    
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete2'), {types: ['geocode']});
+      }
+
 // Get all data from https://everymundointernship.herokuapp.com/popularRoutes/
     function infoFlight(){
         $("#showFlight").empty();
@@ -40,17 +50,33 @@
     }
     infoFlight();
 
-    // Get all data from https://everymundointernship.herokuapp.com/popularRoutes/
+    
+
     function infosearch(){
-        $("#showFlight").empty();
-        animal = $(this).attr("data-name");
-        var queryURL = 'https://everymundointernship.herokuapp.com/search/WC95RP59BM57';
-        $.ajax({
-            url: queryURL,
-            method: "GET",
-        }).then(function(data){
-            console.log(data);
-   
+        $(document).on("click",".flight-button",function(event) {
+            event.preventDefault();
+            var queryURL = 'https://everymundointernship.herokuapp.com/search/WC95RP59BM57';
+
+
+            var flight = {
+                destination: $(".to").val(), 
+                origin: $(".from").val(), 
+                tripType: $('input[name=exampleRadios]:checked').val(), 
+                departureDate: $(".depart").val(),
+                returnDate: $(".return").val(), 
+                passengerCount: $('#exampleFormControlSelect1').find(":selected").text(),
+                fareClass: $(".custom-select").val(), 
+            }
+            console.log(flight)
+            $.ajax({
+                url: queryURL,
+                method: "POST",
+                data: flight
+            }).then(function(data){
+                console.log(data);
+                
+            });
         });
     }
+
     infosearch();
