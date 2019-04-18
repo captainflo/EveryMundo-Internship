@@ -24,9 +24,7 @@
             url: queryURL,
             method: "GET",
         }).then(function(data){
-            // console.log(data);
             for(i=0; i < data.length; i++){
-            console.log(data[i]);
               $(".showFlight").append(`
               <div class="col-xs-12 col-md-4">
                 <div class="card">
@@ -50,24 +48,25 @@
     }
     infoFlight();
 
-    
-
     function infosearch(){
         $(document).on("click",".flight-button",function(event) {
             event.preventDefault();
             var queryURL = 'https://everymundointernship.herokuapp.com/search/WC95RP59BM57';
-
-
+            
+            var departureDate = $(".depart").val()
+            var returnDate = $(".return").val()
+            
             var flight = {
                 destination: $(".to").val(), 
                 origin: $(".from").val(), 
                 tripType: $('input[name=exampleRadios]:checked').val(), 
-                departureDate: $(".depart").val(),
-                returnDate: $(".return").val(), 
-                passengerCount: $('#exampleFormControlSelect1').find(":selected").text(),
+                departureDate: moment(departureDate).format("L"),
+                returnDate: moment(returnDate).format("L"), 
+                passengerCount: $('#exampleFormControlSelect1').find(":selected").index(),
                 fareClass: $(".custom-select").val(), 
             }
             console.log(flight)
+
             $.ajax({
                 url: queryURL,
                 method: "POST",
@@ -78,5 +77,4 @@
             });
         });
     }
-
     infosearch();
