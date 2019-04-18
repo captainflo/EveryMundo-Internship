@@ -57,20 +57,23 @@
             var returnDate = $(".return").val()
             
             var flight = {
-                destination: $(".to").val(), 
-                origin: $(".from").val(), 
-                tripType: $('input[name=exampleRadios]:checked').val(), 
-                departureDate: moment(departureDate).format("L"),
-                returnDate: moment(returnDate).format("L"), 
-                passengerCount: $('#exampleFormControlSelect1').find(":selected").index(),
-                fareClass: $(".custom-select").val(), 
+                    tripType: $('input[name=exampleRadios]:checked').val(), 
+                    destination: $(".to").val(), 
+                    origin: $(".from").val(), 
+                    departureDate: moment(departureDate).format("L"),
+                    returnDate: moment(returnDate).format("L"), 
+                    passengerCount: $('#exampleFormControlSelect1').find(":selected").index(),
+                    // promocode: $(".promo").val()
+                    // fareClass: $(".custom-select").val(), 
             }
-            console.log(flight)
 
             $.ajax({
                 url: queryURL,
                 method: "POST",
-                data: flight
+                data: flight,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json'
+                
             }).then(function(data){
                 console.log(data);
                 
