@@ -6,19 +6,9 @@
         $('.return').prop('disabled', false);
     });
 
-    function initAutocomplete() {
-        // Create the autocomplete object, restricting the search predictions to
-        // geographical location types.
-        autocomplete = new google.maps.places.Autocomplete(
-            document.getElementById('autocomplete'), {types: ['geocode']});
-    
-        autocomplete = new google.maps.places.Autocomplete(
-            document.getElementById('autocomplete2'), {types: ['geocode']});
-      }
-
 // Get all data from https://everymundointernship.herokuapp.com/popularRoutes/
     function infoFlight(){
-        $("#showFlight").empty();
+        $(".showFlight").empty();
         var queryURL = 'https://everymundointernship.herokuapp.com/popularRoutes/WC95RP59BM57';
         $.ajax({
             url: queryURL,
@@ -30,7 +20,7 @@
                 <div class="card">
                     <img class="card-img-top" src="${data[i].routeCoverImage}" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">${data[i].destination} to ${data[i].origin}</h5>
+                        <h5 class="card-title">${data[i].origin} to ${data[i].destination}</h5>
                         <span>${data[i].departureDate}</span>
                         <p class="card-text">${data[i].fareClass}</p>
                         <div class="price float-right">
@@ -51,33 +41,70 @@
     function infosearch(){
         $(document).on("click",".flight-button",function(event) {
             event.preventDefault();
-            var queryURL = 'https://everymundointernship.herokuapp.com/search/WC95RP59BM57';
+            $(".showFlight").empty();
+
+            queryUrl = 'https://cors-anywhere.herokuapp.com/';
+            queryUrl += 'https://everymundointernship.herokuapp.com/search/WC95RP59BM57';
             
             var departureDate = $(".depart").val()
             var returnDate = $(".return").val()
-            
-            var flight = {
-                    tripType: $('input[name=exampleRadios]:checked').val(), 
-                    destination: $(".to").val(), 
-                    origin: $(".from").val(), 
-                    departureDate: moment(departureDate).format("L"),
-                    returnDate: moment(returnDate).format("L"), 
-                    passengerCount: $('#exampleFormControlSelect1').find(":selected").index(),
-                    // promocode: $(".promo").val()
-                    // fareClass: $(".custom-select").val(), 
-            }
+            returnDate = moment(returnDate).format("L") || "";
 
+            flight = {
+               destination: $(".to").val().trim(),
+               origin: $(".from").val().trim(),
+               tripType: $('input[name=exampleRadios]:checked').val(),
+               departureDate:  moment(departureDate).format("L"),
+               returnDate: returnDate,
+               passengerCount: $('#exampleFormControlSelect1').find(":selected").index()
+            };
+            console.log(flight);
             $.ajax({
-                url: queryURL,
-                method: "POST",
-                data: flight,
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json'
-                
-            }).then(function(data){
-                console.log(data);
-                
-            });
+             url: queryUrl,
+             method: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify( flight ),
+             dataType: 'json'
+            }).done( data => {
+               console.log( data );
+                   for(i=0; i < data.length; i++){
+                        $(".showFlight").append(`
+                        <div class="col-xs-12 col-md-12">
+                            <div class="card">
+                                <img class="card-img-top" src="http://usatravelguru.com/wp-content/uploads/2016/05/usatravel-slidera3.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">${data[i].origin} to ${data[i].destination}</h5>
+                                    <span>${data[i].departureDate}</span>
+                                    <p class="card-text">${data[i].fareClass}</p>
+                                    <p class="trip">${data[i].tripType}</p>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Departure Time</th>
+                                                <th scope="col">Arrival Time</th>
+                                                <th scope="col">Price USD</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="routes"></tbody>
+                                    </table>
+                                </div>   
+                            </div>
+                        </div>
+                        `);
+                        for (let j = 0; j < data[i].routes.length; j++) {
+                            $(".routes").append(`
+                            <tr>
+                                <td>${data[i].routes[j].departureTime}</td>
+                                <td>${data[i].routes[j].arrivalTime}</td>
+                                <td>$${data[i].routes[j].priceUSD}</td>
+                            </tr>
+                            `)      
+                        } 
+                    }
+           }).fail( err => {
+               console.error( err );
+               alert("There is no flight");
+           });
         });
     }
     infosearch();
