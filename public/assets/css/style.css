@@ -82,6 +82,10 @@ label{
   height: 177px;
 }
 
+.card-img{
+  height: 220px !important;
+}
+
 .price-us{
   font-size: 30px;
   margin: 0px;

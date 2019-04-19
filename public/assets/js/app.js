@@ -51,13 +51,14 @@
             returnDate = moment(returnDate).format("L") || "";
 
             flight = {
-               destination: $(".to").val().trim(),
-               origin: $(".from").val().trim(),
+               destination: $('.to').val().trim(),
+               origin: $('.from').val().trim(),
                tripType: $('input[name=exampleRadios]:checked').val(),
                departureDate:  moment(departureDate).format("L"),
                returnDate: returnDate,
                passengerCount: $('#exampleFormControlSelect1').find(":selected").index()
             };
+
             console.log(flight);
             $.ajax({
              url: queryUrl,
@@ -71,7 +72,7 @@
                         $(".showFlight").append(`
                         <div class="col-xs-12 col-md-12">
                             <div class="card">
-                                <img class="card-img-top" src="http://usatravelguru.com/wp-content/uploads/2016/05/usatravel-slidera3.jpg" alt="Card image cap">
+                                <img class="card-img" src="http://usatravelguru.com/wp-content/uploads/2016/05/usatravel-slidera3.jpg" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">${data[i].origin} to ${data[i].destination}</h5>
                                     <span>${data[i].departureDate}</span>
@@ -96,9 +97,9 @@
                             <tr>
                                 <td>${data[i].routes[j].departureTime}</td>
                                 <td>${data[i].routes[j].arrivalTime}</td>
-                                <td>$${data[i].routes[j].priceUSD}</td>
+                                <td id="price">$${data[i].routes[j].priceUSD}</td>
                             </tr>
-                            `)      
+                            `)
                         } 
                     }
            }).fail( err => {
@@ -108,3 +109,7 @@
         });
     }
     infosearch();
+
+    
+
+    
