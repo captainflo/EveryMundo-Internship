@@ -10,6 +10,7 @@ Show a form that will have pre filled inputs depending on what route was chosen.
 When the user submits the form post the data to our Search endpoint
 https://everymundointernship.herokuapp.com/search/YOURAPIKEY
 
+Exemple : DTW to LAS
 
 [Check out the App](https://floating-mesa-22897.herokuapp.com/)
 
