@@ -24,7 +24,7 @@
                         <span class="date-${i}">${data[i].departureDate}</span>
                         <p class="card-text">${data[i].fareClass}</p>
                         <div class="price float-right">
-                            <p class="price-us">$${data[i].priceUSD}</p>
+                            <p class="price-us"><span style="font-weight:700;">Fares From</span>$${data[i].priceUSD}</p>
                             <p class="type-'${i} trip">${data[i].tripType}</p>
                         </div>  
                     </div>
