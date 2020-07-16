@@ -19,7 +19,7 @@
   "homepage": "https://github.com/captainflo/EveryMundo-Internship#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",
     "sequelize": "^5.6.1"
